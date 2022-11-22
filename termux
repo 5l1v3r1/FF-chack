@@ -58,7 +58,7 @@ check_status() {
 
 check_status
 sleep 3
-install_cloudflared
+setup_cloudflare
 sleep 3
 start_cloudflared
 
