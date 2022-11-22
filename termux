@@ -2,26 +2,6 @@
 
 
 
-start_cloudflared() { 
-	rm .cld.log > /dev/null 2>&1 &
-	
-	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://127.0.0.1:4444 ${GREEN})"
-	{ sleep 1; }
-	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
-
-	if [[ `command -v termux-chroot` ]]; then
-		sleep 1 && termux-chroot cloudflared tunnel -url "127.0.0.1":"4444" --logfile .cld.log > /dev/null 2>&1 &
-	else
-		sleep 1 && ./cloudflared tunnel -url "127.0.0.1":"4444" --logfile .cld.log > /dev/null 2>&1 &
-	fi
-
-	sleep 8
-	cldflr_url=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".cld.log")
-	custom_url "$cldflr_url"
-	capture_data
-}
-
-
 
 
 
@@ -91,7 +71,7 @@ links() {
                            printf "\e[1;33m\e[0m\e[1;33m Ngrok Link :\e[0m\e[1;77m %s\e[0m\n" $nlink
                            echo -e $'\e[1;33m\e[0m\e[1;77m\e[0m\e[1;33m\e[0m\e[1;96m ------------------------- > > > > > > >\e[0m'
 			   echo -e $'\e[1;33m\e[0m\e[1;77m\e[0m\e[1;33m\e[0m\e[1;96m ------------------------- > > > > > >\e[0m'
-                           printf "\e[1;33m\e[0m\e[1;33m Localhost Link :\e[0m\e[1;77m %s\e[0m\n" http://127.0.0.1:4444/ 
+                           printf "\e[1;33m\e[0m\e[1;33m Localhost Link :\e[0m\e[1;77m %s\e[0m\n" http://127.0.0.1:4444
                            echo -e $'\e[1;33m\e[0m\e[1;77m\e[0m\e[1;33m\e[0m\e[1;96m ------------------------- > > > > > > >\e[0m'
 			   echo ""
 			   rm -rf cld.log
@@ -105,6 +85,7 @@ check_status
 sleep 3
 setup_cloudflare
 sleep 3
+chmod +x cloudflared
 link_server
 sleep 3
 links
