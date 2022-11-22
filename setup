@@ -103,7 +103,6 @@ function url_shortner() {
         rm bURI
         short=$(grep -o 'https://9qr.de/[-0-9a-zA-Z]*' "uri.log")
         shorter=${short#https://}
-        fi
         read -p $'\n\033[1;92mshark \033[1;97m>> \033[1;37mMask Your url domain here \033[1;93m(Ex. https://facebook.com) :\e[0m ' mask
         url_checker $mask
 	printf "${green}shark ${white}>> ${white}Enter your key words ${yellow}: Ex. free-insta-followers\n"
