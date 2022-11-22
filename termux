@@ -104,6 +104,7 @@ check_status() {
 }
 
 check_status
+sleep 3
 setup_cloudflare
 
 
