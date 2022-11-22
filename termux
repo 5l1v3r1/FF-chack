@@ -97,7 +97,7 @@ function url_shortner() {
         curl -s https://api.shrtco.de/v2/shorten?url=${link} >> log.URI 
         grep -o 'https:[^"]*' log.URI >> bURI
         rm log.URI
-        sed 's/\\//g' bURI >> uri.log
+        sed 's/\\//g' bURI >> cld.log
         rm bURI
         short=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' "cld.log")
         shorter=${short#https://}
