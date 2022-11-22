@@ -45,13 +45,7 @@ msg() {
 
 
 
-function connection() {
-        ping -c 1 google.com > /dev/null 2>&1
-        if [[ "$?" != 0 ]];then
-                error_msg "No internet"
-        exit 0
-        fi
-}
+
 
 ## Install ngrok
 install_ngrok() {
@@ -120,8 +114,14 @@ function setup_cloudflare() {
 	fi
 }
 
+## Check Internet Status
+check_status() {
+	echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Internet Status : "
+	timeout 3s curl -fIs "https://api.github.com" > /dev/null
+	[ $? -eq 0 ] && echo -e "${GREEN}Online${WHITE}" && check_update || echo -e "${RED}Offline${WHITE}"
+}
+
 check_status
-connection
 setup_cloudflare
 fix_cloudflared
 install_ngrok
