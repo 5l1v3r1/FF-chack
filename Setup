@@ -41,7 +41,21 @@ echo -e "\e[92m
   
   }
   
-  
+  spinner() {
+        pid=$!
+        spin='\|/-'
+        i=0
+        tput civis
+        while kill -0 $pid 2>/dev/null
+	do
+                i=$(( (i+1) %4 ))
+                printf "\r${cyan1}[${spin:$i:1}]${nc} ${cyan1} ${launch}"
+                sleep .1
+	done
+        clear
+        printf "\r\n${green}[✔]${nc} ${green} ${splashdown}";echo
+        tput cnorm
+}
   
 
 
