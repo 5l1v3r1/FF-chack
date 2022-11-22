@@ -112,24 +112,21 @@ function url_shortner() {
 }
 # ASK FOR URL MODIFICATION
 function askuri() {
-	echo
-	echo
-	if [[ $link != "" ]]; then
-	printf "${yellow}Your Link :-${cyan1} $link\n${yellow}
-	  Do You Want To Modify This Url?${red} (Y/N) : ${nc}"
-	read uri
-	if [[ $uri == "Y" || $uri == "y" ]]; then
-		url_shortner
-	elif [[ $uri == "N" || $uri == "n" ]]; then
-		echo
-		final_url="You Haven't Modify URL!!!"
+echo ""
+read -p $'\e[1;40m\e[31m[\e[32m*\e[31m]\e[32m Accepted This Notice \e[1;91m (Y/N) : \e[0m' option
+echo""
+echo""
+echo""
 
-	else
-                echo
-		error_msg "bro you type wrong..."
-		askuri
-	fi
-}
+if [[ $option == *'Y'* ]]; then
+url_shortner
+exit
+fi
+if [[ $option == *'y'* ]]; then
+url_shortner
+exit
+fi
+
 
 
 
