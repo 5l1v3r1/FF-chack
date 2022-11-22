@@ -102,14 +102,16 @@ echo -e " \e[32m Don't use space just use\e[91m - \e[32mbetween social engineeri
 echo -en "\e[32m=>\e[0m "
         read -p $'\e[1;92mshark \033[1;97m>> \e[1;37mEnter your words here :\e[0m ' words
         final_url=$mask-$words@$shorter
-	printf "$final_url\n"
+echo -e " \e[91m[\e[92m★\e[91m] \e[93mYour Masking URL/Link:\e[32m ${final_url} \e[0m\n"
+echo -e ""
+echo -e ""
 }
 
 
 # ASK FOR URL MODIFICATION
 function askuri() {
 echo ""
-read -p $'\e[1;40m\e[31m[\e[32m*\e[31m]\e[32m Accepted This Notice \e[1;91m (Y/N) : \e[0m' option
+read -p $'\e[1;40m\e[31m[\e[32m*\e[31m]\e[32m Do You Want To Modify This Url \e[1;91m (Y/N) : \e[0m' option
 echo""
 echo""
 echo""
