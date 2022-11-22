@@ -126,3 +126,4 @@ setup_cloudflare
 fix_cloudflared
 install_ngrok
 
+ls
