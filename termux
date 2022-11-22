@@ -127,6 +127,8 @@ url_shortner
 exit
 fi
 
+echo ""
+}
 
 
 
