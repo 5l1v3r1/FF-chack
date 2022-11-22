@@ -129,14 +129,6 @@ function askuri() {
 		error_msg "bro you type wrong..."
 		askuri
 	fi
-	else 
-		clear
-		echo
-		printf "${red}Please Try again...Server Down!!!"
-		sleep 2
-                clear
-		prt
-	fi
 }
 
 
