@@ -50,13 +50,13 @@ function os () {
 	if [ "$?" -eq "0" ]; then
 		OS=DEBIAN 
 		BIN="/usr/bin"
-		main="/usr/share/shark"
+		main="/usr/share/.SUMAN"
                 sudo apt install iputils-ping -y &>/dev/null
 		sudo apt install p7zip-full -y &>/dev/null
 	else
 		OS=TERMUX
 		BIN="${PREFIX}/bin"
-		main="${PREFIX}/share/shark"
+		main="${PREFIX}/share/>SUMAN"
                 pkg install ncurses-utils -y &>/dev/null
                 pkg install p7zip -y &>/dev/null
 	fi
@@ -243,7 +243,7 @@ echo -e $'\e[1;91m\e[0m\e[1;91m\e[0m\e[1;96m\e[0m\e[1;91m   --------------------
 
 echo -e "\e[1;33m[\e[0m\e[1;77m~\e[0m\e[1;33m]\e[0m\e[1;32m \e[95m Onine Hacking \e[0m"
 echo ""
-os
+
 cat
 clear
 echo""
@@ -319,7 +319,7 @@ echo
 logo
 echo
 echo -e "\e[35m[+] Connect Online Hacking FREE FIRE Hacking Server (CyberPlane)......  \e[m "
-sleep 5
+os
 echo
 echo
 clear
