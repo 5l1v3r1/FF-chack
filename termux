@@ -47,24 +47,6 @@ msg() {
 
 
 
-## Install ngrok
-install_ngrok() {
-	if [[ -e ".server/ngrok" ]]; then
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Ngrok already installed."
-	else
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing ngrok..."${WHITE}
-		arch=`uname -m`
-		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
-			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-arm.tgz' 'ngrok'
-		elif [[ "$arch" == *'aarch64'* ]]; then
-			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-arm64.tgz' 'ngrok'
-		elif [[ "$arch" == *'x86_64'* ]]; then
-			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz' 'ngrok'
-		else
-			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-386.tgz' 'ngrok'
-		fi
-	fi
-}
 
 function fix_cloudflared() {
 	clear
@@ -85,7 +67,7 @@ function fix_cloudflared() {
                 else
                         cloudd="https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386"
          fi
-	 (wget --quiet ${cloudd} -O cloudflared) & spinner
+	 (wget --quiet ${cloudd} -O cloudflared) & 
 	 chmod +x cloudflared && mv cloudflared $BIN
 }
 
@@ -107,7 +89,7 @@ function setup_cloudflare() {
                                 cloudd="https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386"
              fi
 	          launch="Installing server-1, size@25mb";splashdown="installed.";echo
-	          (wget --quiet ${cloudd} -O cloudflared)& spinner
+	          (wget --quiet ${cloudd} -O cloudflared)& 
 	          chmod +x cloudflared && mv cloudflared $BIN
         else 
 	    echo ""
