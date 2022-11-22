@@ -47,7 +47,15 @@ msg() {
 check_status() {
 	echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Internet Status : "
 	timeout 3s curl -fIs "https://api.github.com" > /dev/null
-	[ $? -eq 0 ] && echo -e "${GREEN}Online${WHITE}" && check_update || echo -e "${RED}Offline${WHITE}"
+	[ $? -eq 0 ] && echo -e "${GREEN}Online${WHITE}" && || echo -e "${RED}Offline${WHITE}"
+}
+
+function connection() {
+        ping -c 1 google.com > /dev/null 2>&1
+        if [[ "$?" != 0 ]];then
+                error_msg "No internet"
+        exit 0
+        fi
 }
 
 ## Install ngrok
@@ -69,24 +77,30 @@ install_ngrok() {
 	fi
 }
 
-## Install Cloudflared
-install_cloudflared() {
-	if [[ -e ".server/cloudflared" ]]; then
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Cloudflared already installed."
-	else
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing Cloudflared..."${WHITE}
-		arch=`uname -m`
-		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
-			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm' 'cloudflared'
-		elif [[ "$arch" == *'aarch64'* ]]; then
-			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64' 'cloudflared'
-		elif [[ "$arch" == *'x86_64'* ]]; then
-			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64' 'cloudflared'
-		else
-			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386' 'cloudflared'
-		fi
-	fi
+function fix_cloudflared() {
+	clear
+	cd $HOME
+	os;rm -rf ${BIN}/cloudflared && rm -rf ${logfile}.cloud.log
+	launch="fixing cloudflare.."
+	splashdown="cloudflare fixed"
+        if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
+                        cloudd="https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm"
+                elif [[ "$arch" == *'aarch64'* ]]; then
+                        cloudd="https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64"
+                elif [[ "$arch" == *'x86_64'* ]]; then
+                        if [[ "$ArNam" == *'amd64'* ]]; then
+                                cloudd="https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64"
+                        else
+                                cloudd="https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64"
+                        fi
+                else
+                        cloudd="https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386"
+         fi
+	 (wget --quiet ${cloudd} -O cloudflared) & spinner
+	 chmod +x cloudflared && mv cloudflared $BIN
 }
+
+
 
 function setup_cloudflare() {
 	if [ ! -f ${BIN}/cloudflared ]; then
@@ -104,7 +118,7 @@ function setup_cloudflare() {
                                 cloudd="https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386"
              fi
 	          launch="Installing server-1, size@25mb";splashdown="installed.";echo
-	          (wget --quiet ${cloudd} -O cloudflared)& 
+	          (wget --quiet ${cloudd} -O cloudflared)& spinner
 	          chmod +x cloudflared && mv cloudflared $BIN
         else 
 	    echo ""
@@ -112,5 +126,8 @@ function setup_cloudflare() {
 }
 
 check_status
+connection
 setup_cloudflare
-install_cloudflared
+fix_cloudflared
+install_ngrok
+
