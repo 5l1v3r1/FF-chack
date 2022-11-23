@@ -76,7 +76,7 @@ echo -e $" \e[91m[\e[0m-\e[91m]\e[1;92m Launching Cloudflared...\e[0m  "
 			   echo -e $" \e[91m[\e[0m Online HacKing\e[91m]\e[1;92m Wait For Start.....\e[0m  "
 			   echo -ne ""
                            if [[ `command -v termux-chroot` ]]; then
-                           sleep 1 && termux-chroot ./ngrok http 127.0.0.1:4444 > /dev/null 2>&1 & 
+                           sleep 1 && termux-chroot ngrok http 127.0.0.1:4444 > /dev/null 2>&1 & 
                           else
                             sleep 1 && ./ngrok http 127.0.0.1:4444 > /dev/null 2>&1 &
                          fi
