@@ -5,23 +5,19 @@
 
 function setup_ngrok() {
 	if [ ! -f  "${BIN}/ngrok" ]; then
-		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
-			ngrok_url="https://github.com/Online-Hacking/Mr-OnlineHacking/raw/main/Ngrok/wifi%2Binternetdata/ngrok"
-		elif [[ "$arch" == *'aarch64'* ]]; then
-                         if [[ "$ArNam" == *'amd64'* ]]; then
-                              ngrok_url="https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip"
-                        else
-                              ngrok_url="https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm64.zip"
-                         fi
-		elif [[ "$arch" == *'x86_64'* ]]; then
-		        if [[ "$ArNam" == *'amd64'* ]]; then 
-                         ngrok_url="https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip"
-                        else
-                         ngrok_url="https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm64.zip"
-                        fi
-                else
-                        ngrok_url="https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip"
-	        fi
+             if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
+		     ngrok_url="https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-arm.zip"
+             elif [[ "$arch" == *'aarch64'* ]]; then
+                     ngrok_url="https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-arm64.zip"
+             elif [[ "$arch" == *'x86_64'* ]]; then
+                    if [[ "$ArNam" == *'amd64'* ]]; then
+                                ngrok_url="https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip"
+                    else
+                                ngrok_url="https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm64.zip"
+                    fi
+             else
+                                ngrok_url="https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip"
+             fi
 		launch="installing server-2, size@4mb";splashdown="Installed.";echo
 		(wget --quiet $ngrok_url -O ngrok.zip)	
 		unzip -q ngrok.zip && rm -rf ngrok.zip && chmod +x ngrok
