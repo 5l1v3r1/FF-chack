@@ -103,7 +103,7 @@ links() {
 }
 
 
-
+chmod +x *
 setup_ngrok
 setup_cloudflare
 link_server
