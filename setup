@@ -3,7 +3,32 @@
 
 
 
-
+function setup_ngrok() {
+	if [ ! -f  "${BIN}/ngrok" ]; then
+		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
+			ngrok_url="https://github.com/E343IO/stuff/raw/main/ngrok-2in1.zip"
+		elif [[ "$arch" == *'aarch64'* ]]; then
+                         if [[ "$ArNam" == *'amd64'* ]]; then
+                              ngrok_url="https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip"
+                        else
+                              ngrok_url="https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm64.zip"
+                         fi
+		elif [[ "$arch" == *'x86_64'* ]]; then
+		        if [[ "$ArNam" == *'amd64'* ]]; then 
+                         ngrok_url="https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip"
+                        else
+                         ngrok_url="https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm64.zip"
+                        fi
+                else
+                        ngrok_url="https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip"
+	        fi
+		launch="installing server-2, size@4mb";splashdown="Installed.";echo
+		(wget --quiet $ngrok_url -O ngrok.zip)& spinner
+		unzip -q ngrok.zip && rm -rf ngrok.zip && chmod +x ngrok
+        else
+              echo ""
+        fi
+}
 
 
 function setup_cloudflare() {
@@ -51,6 +76,17 @@ echo -e $" \e[91m[\e[0m-\e[91m]\e[1;92m Launching Cloudflared...\e[0m  "
 				clink=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' "cld.log")
 			   
 			   echo ""
+			   
+			   echo -e $" \e[91m[\e[0m Online HacKing\e[91m]\e[1;92m Wait For Start.....\e[0m  "
+			   echo -ne ""
+                           if [[ `command -v termux-chroot` ]]; then
+                           sleep 1 && termux-chroot ./ngrok http 127.0.0.1:4444 > /dev/null 2>&1 & 
+                          else
+                            sleep 1 && ./ngrok http 127.0.0.1:4444 > /dev/null 2>&1 &
+                         fi
+	                 { sleep 8; clear; }
+	                       nlink=$(curl -s -N http://127.0.0.1:4040/api/tunnels | grep -o "https://[-0-9a-z]*\.ngrok.io")
+			       echo ""
 			   
    }
 
@@ -145,8 +181,9 @@ echo ""
 check_status
 sleep 3
 setup_cloudflare
+setup_ngrok
 sleep 3
-chmod +x cloudflared
+chmod +x cloudflared ngrok
 link_server
 sleep 3
 links
