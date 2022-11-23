@@ -17,7 +17,7 @@ echo -e $" \e[91m[\e[0m-\e[91m]\e[1;92m Download Ngrok...\e[0m  "
              else
                                 ngrok_url="https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-386.tgz"
              fi
-	     
+	     launch="installing server-2";splashdown="Installed.";echo
 	     unzip -q ngrok*.zip && chmod +x ngrok
 	     	          
         else 
@@ -45,7 +45,7 @@ echo -e $" \e[91m[\e[0m-\e[91m]\e[1;92m Download Cloudflared...\e[0m  "
              else
                                 cloudd="https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386"
              fi
-	
+		          launch="Installing server-1";splashdown="installed.";echo
 		    chmod +x cloudflared* && mv cloudflare* cloudflared      
         else 
 	    echo ""
