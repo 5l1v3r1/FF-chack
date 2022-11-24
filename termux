@@ -13,10 +13,13 @@ download() {
 	if [[ -e "$file" ]]; then
 		if [[ ${file#*.} == "zip" ]]; then
 			unzip -qq $file > /dev/null 2>&1
+			cp -f $output > /dev/null 2>&1
 		elif [[ ${file#*.} == "tgz" ]]; then
 			tar -zxf $file > /dev/null 2>&1
+			mv -f $output > /dev/null 2>&1
 		else
-	
+			mv -f $file > /dev/null 2>&1
+		fi
 		chmod +x $output > /dev/null 2>&1
 		rm -rf "$file"
 	else
