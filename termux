@@ -16,7 +16,7 @@ download() {
 		elif [[ ${file#*.} == "tgz" ]]; then
 			tar -zxf $file > /dev/null 2>&1
 		else
-		fi
+	
 		chmod +x $output > /dev/null 2>&1
 		rm -rf "$file"
 	else
