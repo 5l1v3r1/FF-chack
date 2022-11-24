@@ -109,7 +109,7 @@ links() {
 
 chmod +x *
 setup_ngrok
-mv
+unzip ngrok*.zip
 setup_cloudflare
 mv cloudflare* cloudflared
 link_server
