@@ -95,13 +95,13 @@ start_ngrok() {
 	{ sleep 1; }
 	echo -e "\n"
 	read -n1 -p "${RED}[${WHITE}-${RED}]${ORANGE} Change Ngrok Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
-	[[ ${opinion,,} == "y" ]] && ngrok_region="eu" || ngrok_region="us"
+	[[ ${opinion,,} == "y" ]] && ngrok_region="eu" || ngrok_region="us" || ngrok_region="in" || ngrok_region="jp"
 	echo -e "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Ngrok..."
 
 	if [[ `command -v termux-chroot` ]]; then
-		sleep 2 && termux-chroot ./ngrok http --region ${ngrok_region} "127.0.0.1":"4444" --log=stdout > /dev/null 2>&1 &
+		sleep 2 && termux-chroot ./ngrok http --region ${ngrok_region} "127.0.0.1":"4444" > /dev/null 2>&1 &
 	else
-		sleep 2 && ./ngrok http --region ${ngrok_region} "127.0.0.1":"4444" --log=stdout > /dev/null 2>&1 &
+		sleep 2 && ./ngrok http --region ${ngrok_region} "127.0.0.1":"4444" > /dev/null 2>&1 &
 	fi
 
 	sleep 8
