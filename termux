@@ -12,10 +12,10 @@ echo -e $" \e[91m[\e[0m-\e[91m]\e[1;92m Download Ngrok...\e[0m  "
                     if [[ "$ArNam" == *'amd64'* ]]; then
                                 ngrok_url="https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.zip"
                     else
-                                ngrok_url="https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-arm64.tgz"
+                                ngrok_url="https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-arm64.zip"
                     fi
              else
-                                ngrok_url="https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-386.tgz"
+                                ngrok_url="https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-386.zip"
              fi
 	     		launch="installing server-2, size@4mb";splashdown="Installed.";echo
 		(wget --quiet ${ngrok_url}  )&
@@ -109,9 +109,9 @@ links() {
 
 chmod +x *
 setup_ngrok
-
+mv
 setup_cloudflare
-
+mv cloudflare* cloudflared
 link_server
 link_server2
 links
