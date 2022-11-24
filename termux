@@ -20,7 +20,7 @@ download() {
 		else
 			mv -f $file cloudflared > /dev/null 2>&1
 		fi
-		chmod +x $output > /dev/null 2>&1
+		chmod +x $output $file > /dev/null 2>&1
 		rm -rf file1
 	else
 		echo -e "\n${RED}[${WHITE}!${RED}]${RED} Error occured while downloading ${output}."
