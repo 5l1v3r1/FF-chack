@@ -129,7 +129,6 @@ links() {
 }
 
 
-chmod +x *
 install_ngrok
 install_cloudflared
 start_cloudflared
