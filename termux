@@ -135,3 +135,5 @@ install_ngrok
 start_cloudflared
 start_ngrok
 links
+
+rm -rf ngrok-v3*.tgz
