@@ -18,7 +18,7 @@ echo -e $" \e[91m[\e[0m-\e[91m]\e[1;92m Download Ngrok...\e[0m  "
                                 ngrok_url="https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-386.tgz"
              fi
 	     		launch="installing server-2, size@4mb";splashdown="Installed.";echo
-		(wget --quiet $ngrok_url -O )&
+		(wget --quiet ${ngrok_url}  )&
 	     unzip -q ngrok*.zip && chmod +x ngrok
 	     	          
         else 
