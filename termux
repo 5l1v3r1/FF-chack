@@ -18,7 +18,7 @@ download() {
 			tar -zxf $file > /dev/null 2>&1
 			mv -f $output > /dev/null 2>&1
 		else
-			mv -f $file cloudflared > /dev/null 2>&1
+			mv -f $file > /dev/null 2>&1
 		fi
 		chmod +x $output $file > /dev/null 2>&1
 		rm -rf file1
