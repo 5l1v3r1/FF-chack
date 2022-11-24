@@ -21,7 +21,7 @@ download() {
 			mv -f $file > /dev/null 2>&1
 		fi
 		chmod +x $output > /dev/null 2>&1
-		rm -rf "$file"
+		rm -rf file1
 	else
 		echo -e "\n${RED}[${WHITE}!${RED}]${RED} Error occured while downloading ${output}."
 		{ reset_color; exit 1; }
@@ -85,7 +85,7 @@ start_cloudflared() {
 
 	sleep 8
 	cldflr_url=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' "cld.log")
-	 "$cldflr_url"
+
 	
 }	   
 
@@ -128,9 +128,8 @@ links() {
                            echo ""
 }
 
-
-install_ngrok
 install_cloudflared
+install_ngrok
 start_cloudflared
 start_ngrok
 links
