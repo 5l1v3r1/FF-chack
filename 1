@@ -157,3 +157,25 @@ tput cnorm
 printf "\e[1;92m [Done]\e[0m";
 echo "";
 }
+
+server
+
+clear
+
+echo ""
+			   ( sleep 2 ) &> /dev/null & connection
+                           echo ""
+                           ( sleep 5 ) &> /dev/null & spin_1
+			   echo ""
+			   (sleep 4) &> /dev/null & spin_2
+			   echo ""
+			   tput civis
+			   ( sleep 9 ) &> /dev/null & spinner_1
+                           echo ""
+			   php -S 127.0.0.1:4444 > /dev/null 2>&1 &
+			   ( sleep 5 ) &> /dev/null & spinner_2
+			   echo ""
+			   ( sleep 5 ) &> /dev/null & spinner_3
+			   echo ""
+			   sleep 3
+			   echo ""
