@@ -24,7 +24,7 @@ download() {
 		chmod +x $output $file > /dev/null 2>&1
 		rm -rf file1
 	else
-		echo -e "\n${RED}[${WHITE}!${RED}]${RED} Error occured while downloading ${output}."
+		echo -e "\e[91m Error occured while downloading ${output}."
 		{ reset_color; exit 1; }
 	fi
 }
@@ -32,9 +32,9 @@ download() {
 ## Install LocalXpose
 install_localxpose() {
 	if [[ -e "loclx" ]]; then
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} LocalXpose already installed."
+		echo -e "\e[91m[\e[92m-\e[91m] \e[96m LocalXpose already installed."
 	else
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing LocalXpose..."${WHITE}
+		echo -e "\e[91m[\e[92m*\e[91m] \e[96m Installing LocalXpose..."
 		arch=`uname -m`
 		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
 			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm.zip' 'loclx'
@@ -54,9 +54,17 @@ localxpose_auth() {
 	[ -d ".localxpose" ] && auth_f=".localxpose/.access" || auth_f="$HOME/.localxpose/.access" 
 
 	[ "$(./loclx account status | grep Error)" ] && {
-		echo -e "\n\n${RED}[${WHITE}!${RED}]${GREEN} Create an account on ${ORANGE}localxpose.io${GREEN} & copy the token\n"
+		echo -e $'\e[1;91m\e[0m\e[1;91m\e[0m\e[1;96m\e[0m\e[1;91m   ----------------------------------------  \e[1;91m\e[0m'
+                echo -e $'\e[1;96m\e[0m\e[1;77m\e[0m\e[1;96m\e[0m\e[1;91m  !!      Requirement Localxpose Token    !!\e[0m'
+                echo -e $'\e[1;91m\e[0m\e[1;91m\e[0m\e[1;96m\e[0m\e[1;91m   ----------------------------------------- \e[1;91m\e[0m'
+                echo ""
+                echo""
+                echo -e "\e[91m[\e[92m*\e[91m]\e[93m Visit \e[92mlocalxpose.io \e[m "
+                echo ""
+                echo -e "\e[91m[\e[92m*\e[91m]\e[93m Create an account on & Click Access Button & Copy Access Token \e[m "
+                echo ""
 		sleep 3
-		read -p "${RED}[${WHITE}-${RED}]${ORANGE} Input Loclx Token :${ORANGE} " loclx_token
+		read -p "\e[91m[\e[92m!\e[91m]\e[93m Input Loclx Token :\e[97 " loclx_token
 		[[ $loclx_token == "" ]] && {
 			echo -e "\n${RED}[${WHITE}!${RED}]${RED} You have to input Localxpose Token." ; sleep 2 ; tunnel_menu
 		} || {
@@ -67,17 +75,17 @@ localxpose_auth() {
 
 ## Start LocalXpose (Again...)
 start_loclx() {
-	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
+	echo -e "\e[91m[\e[0m-\e[91m]\e[1;92m Launching LocalXpose...\e[0m "
 	{ sleep 1; setup_site; localxpose_auth; }
 	echo -e "\n"
-	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Change Loclx Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
+	read -n1 -p "\e[91m[\e[92m?\e[91m]\e[92m Change Loclx Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
 	[[ ${opinion,,} == "y" ]] && loclx_region="eu" || loclx_region="us"
 	echo -e "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching LocalXpose..."
 
 	if [[ `command -v termux-chroot` ]]; then
-		sleep 1 && termux-chroot ./loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" > .loclx 2>&1 &
+		sleep 1 && termux-chroot ./loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t 127.0.0.1:4444 > .loclx 2>&1 &
 	else
-		sleep 1 && ./loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" > .loclx 2>&1 &
+		sleep 1 && ./loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t 127.0.0.1:4444 > .loclx 2>&1 &
 	fi
 
 	sleep 12
