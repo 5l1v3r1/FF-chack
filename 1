@@ -1,3 +1,23 @@
+connection() {
+while :
+do
+if curl -s --head  --request GET www.google.com | grep "200 OK" > /dev/null ; then
+    echo -e "\e[1;92m>> \e[1;93m[\e[1;92m Active ●\e[1;93m ]\e[m"
+    echo 
+    sleep 3
+    break
+else
+    echo -e "\e[1;92m>> \e[1;93m[\e[1;91m Inactive ●\e[1;93m ]\e[m"
+    sleep 2
+    echo
+    echo -e "\e[1;92m>> \e[1;91mCheck your connection and Try Again!!\e[m"
+    sleep 3
+    echo
+    exit
+fi
+done
+}
+
 #spin
 spin_shark () {
 local pid=$!
@@ -80,7 +100,17 @@ printf "\e[1;92m [Done]\e[0m";
 echo "";
 }
 
-spin_shark
-spin
-spinner
+echo 
+			    connection
+			    ( sleep 5 ) &> /dev/null & spin_shark
+			    php -S 127.0.0.1:4444 > /dev/null 2>&1 &    
+			    sleep 1  
+			    echo 
+			    (sleep 6) &> /dev/null & spin
+			    echo
+			    tput civis
+			    cp 1 > /dev/null 2>&1 & 
+			    ( sleep 18 ) &> /dev/null & spinner
+			    echo 
+
 spinner1
