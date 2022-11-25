@@ -75,13 +75,13 @@ start_loclx() {
 	echo -e "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching LocalXpose..."
 
 	if [[ `command -v termux-chroot` ]]; then
-		sleep 1 && termux-chroot ./loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" > .server/.loclx 2>&1 &
+		sleep 1 && termux-chroot ./loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" > .loclx 2>&1 &
 	else
-		sleep 1 && ./loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" > .server/.loclx 2>&1 &
+		sleep 1 && ./loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" > .loclx 2>&1 &
 	fi
 
 	sleep 12
-	loclx_url=$(cat .server/.loclx | grep -o '[0-9a-zA-Z.]*.loclx.io')
+	loclx_url=$(cat .loclx | grep -o '[0-9a-zA-Z.]*.loclx.io')
 	"$loclx_url"
 	
 }
