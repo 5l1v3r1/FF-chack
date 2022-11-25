@@ -1,0 +1,86 @@
+#spin
+spin_shark () {
+local pid=$!
+local delay=0.05
+local spinstr='|/-\'
+while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+local temp=${spinstr#?}
+tput civis
+printf "\e[1;91m\r[\e[92m*\e[91m]\e[1;93m Setting up Online Hacking PUBG ID Hack Tool ... [\e[1;92m%c\e[1;93m]\e[0m  " "$spinstr"
+local spinstr=$temp${spinstr%"$temp"}
+sleep $delay
+printf "\b\b\b\b\b\b"
+done
+printf "   \b\b\b"
+tput cnorm
+printf "\e[1;92m [Done]\e[0m"
+echo
+}
+
+#spin
+spin () {
+local pid=$!
+local delay=0.05
+local spinstr='|/-\'
+while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+local temp=${spinstr#?}
+tput civis
+printf "\e[1;91m\r[\e[92m*\e[91m]\e[1;93m Fetching server ... [\e[1;92m%c\e[1;93m]\e[0m  " "$spinstr"
+local spinstr=$temp${spinstr%"$temp"}
+sleep $delay
+printf "\b\b\b\b\b\b"
+done
+printf "   \b\b\b"
+tput cnorm
+printf "\e[1;92m [Done]\e[0m"
+echo
+}
+
+spinner () {
+
+local pid=$!
+local delay=0.25
+local spinner=( '█■■■■' '■█■■■' '■■█■■' '■■■█■' '■■■■█' )
+
+while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+
+for i in "${spinner[@]}"
+do
+	tput civis
+	echo -ne "\033[1;91m\r[\e[1;92m*\e[1;91m]\e[1;93m Executing Firewall ... \e[1;93m[\033[1;92m$i\033[1;93m]\033[0m   ";
+	sleep $delay
+	printf "\b\b\b\b\b\b\b\b";
+done
+done
+printf "   \b\b\b\b\b"
+tput cnorm
+printf "\e[1;92m [Done]\e[0m";
+echo "";
+}
+
+spinner1 () {
+
+local pid=$!
+local delay=0.25
+local spinner=( '█■■■■' '■█■■■' '■■█■■' '■■■█■' '■■■■█' )
+
+while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+
+for i in "${spinner[@]}"
+do
+	tput civis
+	echo -ne "\033[1;91m\r[\e[1;92m*\e[1;91m]\e[1;93m Masking Domain ... \e[1;93m[\033[1;92m$i\033[1;93m]\033[0m   ";
+	sleep $delay
+	printf "\b\b\b\b\b\b\b\b";
+done
+done
+printf "   \b\b\b\b\b"
+tput cnorm
+printf "\e[1;92m [Done]\e[0m";
+echo "";
+}
+
+spin_shark
+spin
+spinner
+spinner1
