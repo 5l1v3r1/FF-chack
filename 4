@@ -10,7 +10,7 @@ check_status() {
 
 ## server
 server() {
-                           echo -e "\e[1;93mCheck Your Connection....." & sleep 2 & connection
+                           ( sleep 2 ) &> /dev/null & connection
                            echo ""
                            ( sleep 5 ) &> /dev/null & spin_1
 			   echo ""
@@ -761,7 +761,7 @@ connection() {
 while :
 do
 if curl -s --head  --request GET www.google.com | grep "200 OK" > /dev/null ; then
-    echo -e "\e[1;92m>> \e[1;93m[\e[1;92m Active ●\e[1;93m ]\e[m"
+    echo -e "\e[1;92m>> \e[1;93mCheck Your Connection..... " && sleep 2 && "\e[1;93m[\e[1;92m Active ●\e[1;93m ]\e[m"
     echo 
     sleep 3
     break
