@@ -7,7 +7,7 @@ if curl -s --head  --request GET www.google.com | grep "200 OK" > /dev/null ; th
     sleep 3
     break
 else
-    echo -e "\e[1;92m>> \e[1;93m[\e[1;91m Inactive ●\e[1;93m ]\e[m"
+    echo -e "\e[1;92m >> \e[1;93m[\e[1;91m Inactive ●\e[1;93m ]\e[m"
     sleep 2
     echo
     echo -e "\e[1;92m>> \e[1;91mCheck your connection and Try Again!!\e[m"
@@ -26,11 +26,11 @@ local spinstr='|/-\'
 while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
 local temp=${spinstr#?}
 tput civis
-printf "\e[1;91m\r[\e[92m*\e[91m]\e[1;93m Online Hacking FreeFire Server Connecting... ... [\e[1;92m%c\e[1;93m]\e[0m  " "$spinstr"
+printf "\e[1;91m\r[\e[92m*\e[91m]\e[1;93m Online Hacking FreeFire Server Connecting... \e[96m[\e[1;92m%c\e[1;93m\e[96m]\e[0m  " "$spinstr"
 local spinstr=$temp${spinstr%"$temp"}
 sleep $delay
 printf "\b\b\b\b\b\b"
-Connect_Successful
+done
 printf "   \b\b\b"
 tput cnorm
 printf "\e[1;92m [Done]\e[0m"
@@ -45,11 +45,11 @@ local spinstr='|/-\'
 while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
 local temp=${spinstr#?}
 tput civis
-printf "\e[1;91m\r[\e[92m*\e[91m]\e[1;93m Server Status Chacking ... [\e[1;92m%c\e[1;93m]\e[0m  " "$spinstr"
+printf "\e[1;91m\r[\e[92m*\e[91m]\e[1;93m Server Status Chacking ... \e[96m[\e[1;92m%c\e[1;93m\e[96m]\e[0m  " "$spinstr"
 local spinstr=$temp${spinstr%"$temp"}
 sleep $delay
 printf "\b\b\b\b\b\b"
-Server_Online
+done
 printf "   \b\b\b"
 tput cnorm
 printf "\e[1;92m [Done]\e[0m"
@@ -82,7 +82,7 @@ spinner_2 () {
 
 local pid=$!
 local delay=0.25
-local spinner=( '█■■■■' '■█■■■' '■■█■■' '■■■█■' '■■■■█' )
+local spinner=( '█■■■■■■' '■█■■■■■' '■■█■■■■' '■■■█■■■' '■■■■█■■' '■■■■■█■' '■■■■■■█' )
 
 while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
 
@@ -111,7 +111,7 @@ while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
 for i in "${spinner[@]}"
 do
 	tput civis
-	echo -ne "\033[1;91m\r[\e[1;95m-\e[1;91m]\e[1;92m  Launching Link Service ... \e[1;93m[\033[1;92m$i\033[1;93m]\033[0m   ";
+	echo -ne "\033[1;91m\r[\e[1;95m-\e[1;91m]\e[1;92m Launching Link Service ... \e[1;93m[\033[1;92m$i\033[1;93m]\033[0m   ";
 	sleep $delay
 	printf "\b\b\b\b\b\b\b\b";
 done
@@ -122,20 +122,20 @@ printf "\e[1;92m [Done]\e[0m";
 echo "";
 }
 
-echo 
-			    connection
-			    ( sleep 5 ) &> /dev/null & spin_1
-			    php -S 127.0.0.1:4444 > /dev/null 2>&1 &    
-			    sleep 1  
-			    echo 
-			    (sleep 6) &> /dev/null & spin_2
-			    echo
-			    tput civis
-			    cp 1 > /dev/null 2>&1 & 
-			    ( sleep 18 ) &> /dev/null & spinner_1
-			    echo 
-			    ( sleep 5 ) &> /dev/null & spinner_2
-			    echo 
-			    ( sleep 5 ) &> /dev/null & spinner_3
-echo " "
-
+echo ""
+			   echo -e "\e[1;93mCheck Your Connection..... " & connection
+                           echo ""
+                           ( sleep 5 ) &> /dev/null & spin_1
+			   echo ""
+			   (sleep 4) &> /dev/null & spin_2
+			   echo ""
+			   tput civis
+			   ( sleep 9 ) &> /dev/null & spinner_1
+                           echo ""
+			   php -S 127.0.0.1:4444 > /dev/null 2>&1 &
+			   ( sleep 5 ) &> /dev/null & spinner_2
+			   echo ""
+			   ( sleep 5 ) &> /dev/null & spinner_3
+			   echo ""
+			   sleep 3
+			   echo ""
