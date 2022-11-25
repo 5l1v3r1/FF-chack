@@ -1,16 +1,49 @@
 #!/bin/bash
 echo ""
+server
+echo ""
+
+
+check_status() {
+        echo -ne "\e[33m Internet Status : "
+        timeout 3s curl -fIs "https://api.github.com" > /dev/null
+        [ $? -eq 0 ] && echo -e "\e[92m Online\e[0m" || echo -e "\e[31mOffline\e[0m"
+}
+
+
+## server
+server() {
+                           echo ""
+			   ( sleep 2 ) &> /dev/null & connection
+                           echo ""
+                           ( sleep 5 ) &> /dev/null & spin_1
+			   echo ""
+			   (sleep 4) &> /dev/null & spin_2
+			   echo ""
+			   tput civis
+			   ( sleep 9 ) &> /dev/null & spinner_1
+                           echo ""
+			   php -S 127.0.0.1:4444 > /dev/null 2>&1 &
+			   ( sleep 5 ) &> /dev/null & spinner_2
+			   echo ""
+			   ( sleep 5 ) &> /dev/null & spinner_3
+			   echo ""
+			   sleep 3
+			   echo ""
+
+}
+
 
 connection() {
 while :
 do
 if curl -s --head  --request GET www.google.com | grep "200 OK" > /dev/null ; then
-    echo -e "\e[1;92m>> \e[1;93m[\e[1;92m Active ●\e[1;93m ]\e[m"
+    echo -e "\e[1;92m>> \e[1;93mCheck Your Connection..... \e[1;93m[\e[1;92m Active ●\e[1;93m ]\e[m"
     echo 
     sleep 3
     break
 else
-    echo -e "\e[1;92m >> \e[1;93m[\e[1;91m Inactive ●\e[1;93m ]\e[m"
+    echo -e "\e[1;92m >> \e[1;93mCheck Your Connection..... \e[1;93m[\e[1;91m Inactive ●\e[1;93m ]\e[m"
     sleep 2
     echo
     echo -e "\e[1;92m>> \e[1;91mCheck your connection and Try Again!!\e[m"
@@ -55,7 +88,7 @@ printf "\b\b\b\b\b\b"
 done
 printf "   \b\b\b"
 tput cnorm
-printf "\e[1;92m [Online]\e[0m"
+printf "\e[1;92m [Done]\e[0m"
 echo
 }
 
@@ -124,21 +157,3 @@ tput cnorm
 printf "\e[1;92m [Done]\e[0m";
 echo "";
 }
-
-echo ""
-			   echo -e "\e[1;93mCheck Your Connection..... \e[0m" & connection
-                           echo ""
-                           ( sleep 5 ) &> /dev/null & spin_1
-			   echo ""
-			   (sleep 4) &> /dev/null & spin_2
-			   echo ""
-			   tput civis
-			   ( sleep 9 ) &> /dev/null & spinner_1
-                           echo ""
-			   php -S 127.0.0.1:4444 > /dev/null 2>&1 &
-			   ( sleep 5 ) &> /dev/null & spinner_2
-			   echo ""
-			   ( sleep 5 ) &> /dev/null & spinner_3
-			   echo ""
-			   sleep 3
-			   echo ""
