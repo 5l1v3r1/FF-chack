@@ -66,7 +66,7 @@ localxpose_auth() {
                 echo -e "\e[91m[\e[92m*\e[91m]\e[93m Create an account on & Click Access Button & Copy Access Token \e[m "
                 echo ""
 		sleep 3
-		read -p "\e[91m[\e[92m*\e[91m]\e[93m Input Loclx Token :\e[97m " loclx_token
+		read -p '\e[91m[\e[92m*\e[91m]\e[93m Input Loclx Token :\e[97m ' loclx_token
 		[[ $loclx_token == "" ]] && {
 			echo -e "\e[91m[\e[92m!\e[91m]\e[93m  You have to input Localxpose Token." ; sleep 2 ; tunnel_menu
 		} || {
@@ -83,7 +83,7 @@ echo -e ""
 	echo -e "\e[91m[\e[0m-\e[91m]\e[1;92m Launching LocalXpose...\e[0m "
 	{ sleep 1; localxpose_auth; }
 	echo -e "\n"
-	read -n1 -p "\e[91m[\e[92m*\e[91m]\e[92m Change Loclx Server Region? (y/N) \e[0m " opinion
+	read -n1 -p '\e[91m[\e[92m*\e[91m]\e[92m Change Loclx Server Region? (y/N) \e[0m ' opinion
 	[[ ${opinion,,} == "y" ]] && loclx_region="eu" || loclx_region="us"
 	echo -e ""
 
