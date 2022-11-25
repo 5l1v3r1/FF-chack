@@ -26,7 +26,7 @@ local spinstr='|/-\'
 while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
 local temp=${spinstr#?}
 tput civis
-printf "\e[1;91m\r[\e[92m*\e[91m]\e[1;93m Setting up Online Hacking PUBG ID Hack Tool ... [\e[1;92m%c\e[1;93m]\e[0m  " "$spinstr"
+printf "\e[1;91m\r[\e[92m*\e[91m]\e[1;93m Online Hacking Server Connect... ... [\e[1;92m%c\e[1;93m]\e[0m  " "$spinstr"
 local spinstr=$temp${spinstr%"$temp"}
 sleep $delay
 printf "\b\b\b\b\b\b"
@@ -45,7 +45,7 @@ local spinstr='|/-\'
 while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
 local temp=${spinstr#?}
 tput civis
-printf "\e[1;91m\r[\e[92m*\e[91m]\e[1;93m Fetching server ... [\e[1;92m%c\e[1;93m]\e[0m  " "$spinstr"
+printf "\e[1;91m\r[\e[92m*\e[91m]\e[1;93m Server Status Chacking [\e[1;92m%c\e[1;93m]\e[0m  " "$spinstr"
 local spinstr=$temp${spinstr%"$temp"}
 sleep $delay
 printf "\b\b\b\b\b\b"
@@ -67,7 +67,7 @@ while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
 for i in "${spinner[@]}"
 do
 	tput civis
-	echo -ne "\033[1;91m\r[\e[1;92m*\e[1;91m]\e[1;93m Executing Firewall ... \e[1;93m[\033[1;92m$i\033[1;93m]\033[0m   ";
+	echo -ne "\033[1;91m\r[\e[1;92m*\e[1;91m]\e[1;93m PHP Server Now Startng ... \e[1;93m[\033[1;92m$i\033[1;93m]\033[0m   ";
 	sleep $delay
 	printf "\b\b\b\b\b\b\b\b";
 done
@@ -89,7 +89,29 @@ while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
 for i in "${spinner[@]}"
 do
 	tput civis
-	echo -ne "\033[1;91m\r[\e[1;92m*\e[1;91m]\e[1;93m Masking Domain ... \e[1;93m[\033[1;92m$i\033[1;93m]\033[0m   ";
+	echo -ne "\033[1;91m\r[\e[1;92m*\e[1;91m]\e[1;93m Start LocalHost... :  \e[0m http://127.0.0.1:4444 \e[1;93m[\033[1;92m$i\033[1;93m]\033[0m   ";
+	sleep $delay
+	printf "\b\b\b\b\b\b\b\b";
+done
+done
+printf "   \b\b\b\b\b"
+tput cnorm
+printf "\e[1;92m [Done]\e[0m";
+echo "";
+}
+
+spinner_3 () {
+
+local pid=$!
+local delay=0.25
+local spinner=( '█■■■■' '■█■■■' '■■█■■' '■■■█■' '■■■■█' )
+
+while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+
+for i in "${spinner[@]}"
+do
+	tput civis
+	echo -ne "\033[1;91m\r[\e[1;92m*\e[1;91m]\e[1;93m  Launching Link Service... \e[1;93m[\033[1;92m$i\033[1;93m]\033[0m   ";
 	sleep $delay
 	printf "\b\b\b\b\b\b\b\b";
 done
@@ -113,5 +135,7 @@ echo
 			    ( sleep 18 ) &> /dev/null & spinner_1
 			    echo 
 			    ( sleep 5 ) &> /dev/null & spinner_2
+			    echo 
+			    ( sleep 5 ) &> /dev/null & spinner_3
 echo " "
 
