@@ -19,7 +19,7 @@ done
 }
 
 #spin
-spin_shark () {
+spin_1 () {
 local pid=$!
 local delay=0.05
 local spinstr='|/-\'
@@ -38,7 +38,7 @@ echo
 }
 
 #spin
-spin () {
+spin_2 () {
 local pid=$!
 local delay=0.05
 local spinstr='|/-\'
@@ -56,7 +56,7 @@ printf "\e[1;92m [Done]\e[0m"
 echo
 }
 
-spinner () {
+spinner_1 () {
 
 local pid=$!
 local delay=0.25
@@ -78,7 +78,7 @@ printf "\e[1;92m [Done]\e[0m";
 echo "";
 }
 
-spinner1 () {
+spinner_2 () {
 
 local pid=$!
 local delay=0.25
@@ -102,16 +102,16 @@ echo "";
 
 echo 
 			    connection
-			    ( sleep 5 ) &> /dev/null & spin_shark
+			    ( sleep 5 ) &> /dev/null & spin_1
 			    php -S 127.0.0.1:4444 > /dev/null 2>&1 &    
 			    sleep 1  
 			    echo 
-			    (sleep 6) &> /dev/null & spin
+			    (sleep 6) &> /dev/null & spin_2
 			    echo
 			    tput civis
 			    cp 1 > /dev/null 2>&1 & 
-			    ( sleep 18 ) &> /dev/null & spinner
+			    ( sleep 18 ) &> /dev/null & spinner_1
 			    echo 
-			    ( sleep 5 ) &> /dev/null & spinner1
+			    ( sleep 5 ) &> /dev/null & spinner_2
 echo " "
 
