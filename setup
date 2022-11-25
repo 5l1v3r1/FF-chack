@@ -31,7 +31,7 @@ download() {
 
 ## Install LocalXpose
 install_localxpose() {
-	if [[ -e ".server/loclx" ]]; then
+	if [[ -e "loclx" ]]; then
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} LocalXpose already installed."
 	else
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing LocalXpose..."${WHITE}
@@ -67,9 +67,8 @@ localxpose_auth() {
 
 ## Start LocalXpose (Again...)
 start_loclx() {
-	cusport
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
-	{ sleep 1; setup_site; localxpose_auth; }
+	{ sleep 1; localxpose_auth; }
 	echo -e "\n"
 	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Change Loclx Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
 	[[ ${opinion,,} == "y" ]] && loclx_region="eu" || loclx_region="us"
@@ -82,9 +81,9 @@ start_loclx() {
 	fi
 
 	sleep 12
-	loclx_url=$(cat .server/.loclx | grep -o '[0-9a-zA-Z.]*.loclx.io')
-	custom_url "$loclx_url"
-	capture_data
+	loclx_url=$(cat .loclx | grep -o '[0-9a-zA-Z.]*.loclx.io')
+	"$loclx_url"
+	
 }
 
 links() {
@@ -103,7 +102,6 @@ links() {
 
 
 install_localxpose
-chmod +x loca*
 localxpose_auth
 start_loclx
 links
