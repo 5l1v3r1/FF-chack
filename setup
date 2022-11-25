@@ -76,11 +76,11 @@ localxpose_auth() {
 ## Start LocalXpose (Again...)
 start_loclx() {
 	echo -e "\e[91m[\e[0m-\e[91m]\e[1;92m Launching LocalXpose...\e[0m "
-	{ sleep 1; setup_site; localxpose_auth; }
+	{ sleep 1; localxpose_auth; }
 	echo -e "\n"
-	read -n1 -p "\e[91m[\e[92m?\e[91m]\e[92m Change Loclx Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
+	read -n1 -p "\e[91m[\e[92m?\e[91m]\e[92m Change Loclx Server Region? " opinion
 	[[ ${opinion,,} == "y" ]] && loclx_region="eu" || loclx_region="us"
-	echo -e "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching LocalXpose..."
+	echo -e ""
 
 	if [[ `command -v termux-chroot` ]]; then
 		sleep 1 && termux-chroot ./loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t 127.0.0.1:4444 > .loclx 2>&1 &
@@ -90,7 +90,6 @@ start_loclx() {
 
 	sleep 12
 	loclx_url=$(cat .loclx | grep -o '[0-9a-zA-Z.]*.loclx.io')
-	"$loclx_url"
 	
 }
 
