@@ -52,7 +52,7 @@ printf "\b\b\b\b\b\b"
 done
 printf "   \b\b\b"
 tput cnorm
-printf "\e[1;92m [Online]\e[0m"
+printf "\e[1;92m [Done]\e[0m"
 echo
 }
 
@@ -82,7 +82,7 @@ spinner_2 () {
 
 local pid=$!
 local delay=0.25
-local spinner=( '█■■■■■■' '■█■■■■■' '■■█■■■■' '■■■█■■■' '■■■■█■■' '■■■■■█■' '■■■■■■█' )
+local spinner=( '█■■■■' '■█■■■' '■■█■■' '■■■█■' '■■■■█' )
 
 while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
 
