@@ -1,2 +1,2 @@
 #!/bin/bash
-echo ""
+echo -e "\e[92mPermission Allow\e[0m" 
