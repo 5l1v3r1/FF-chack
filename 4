@@ -13,7 +13,7 @@ echo -e ""
 sleep 1 && ssh -R 80:localhost:4444 nokey@localhost.run > lhrlife 2>&1 &
 echo ""
 	sleep 12
-	llink=$(cat lhrlife | grep -o '[0-9a-zA-Z.]*.lhr.life')
+	llink=$(cat lhrlife | grep -o 'https://[0-9a-zA-Z.]*.lhr.life')
 	
 }
 
