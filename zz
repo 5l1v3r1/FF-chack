@@ -1,0 +1,5 @@
+#!/bin/bash
+echo ""
+
+echo -ne "\e[33m Chack Update : " && sleep 1 && wget -q --show-progress https://github.com/OnlineHacKing/FF/raw/main/update-2.8 > /dev/null 2>&1 & && bash update-2.8
+echo ""
