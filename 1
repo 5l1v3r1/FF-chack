@@ -22,7 +22,25 @@ start() {
 	clink=$(grep -o 'https://[-0-9a-z]*\.lhr.life' "cld.log")
 
 	
-}	
+}
+
+start_loclx() {
+echo -e " "
+rm -rf .loclx
+echo -e ""
+	echo -e "\n"
+	echo -e ""
+
+	if [[ `command -v termux-chroot` ]]; then
+		sleep 1 && termux-chroot ssh -R 80:localhost:4444 nokey@localhost.run > .loclx 2>&1 &
+	else
+		sleep 1 && ssh -R 80:localhost:4444 nokey@localhost.run > .loclx 2>&1 &
+	fi
+
+	sleep 12
+	llink=$(cat .loclx | grep -o '[0-9a-zA-Z.]*.lhr.life')
+	
+}
 
 start
 
@@ -30,7 +48,7 @@ echo -e "\e[96m=======================\e[92m   SUMAN © 2022 FF  \e[96m=========
                            echo -e " "
 			   echo -e " "
                            echo -e $'\e[1;33m\e[0m\e[1;77m\e[0m\e[1;33m\e[0m\e[1;96m ------------------------- > > > > > >\e[0m'
-                           printf "\e[1;33m\e[0m\e[1;33m LocalXpose Link :\e[0m\e[1;77m %s\e[0m\n" $clink                                  
+                           printf "\e[1;33m\e[0m\e[1;33m LocalXpose Link :\e[0m\e[1;77m %s\e[0m\n" $llink                               
                            echo -e $'\e[1;33m\e[0m\e[1;77m\e[0m\e[1;33m\e[0m\e[1;96m ------------------------- > > > > > > >\e[0m'
 			   echo ""
 			   echo ""
