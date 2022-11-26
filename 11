@@ -1,0 +1,14 @@
+#!/bin/bash
+check_status() {
+        echo -ne "\e[33m Internet Status : "
+        timeout 3s curl -fIs "https://api.github.com" > /dev/null
+        [ $? -eq 0 ] && echo -e "\e[92m Online\e[0m" || echo -e "\e[31mOffline\e[0m"
+}
+check_status
+echo ""
+echo -ne "\e[33m Chack Update : " && sleep 1 && wget -q https://github.com/OnlineHacKing/FF/raw/main/update-2.8 > /dev/null && bash update-2.8 && rm -rf update-2.8
+echo ""
+echo -ne "\e[33m Checking Latest Version : " && sleep 1 && wget -q https://github.com/OnlineHacKing/FF/raw/main/chack-update-2.8 > /dev/null && bash chack-update-2.8 && rm -rf chack-update-2.8
+echo ""
+echo -ne "\e[33m Admin Permission : " && sleep 1 && wget -q https://github.com/OnlineHacKing/FF/raw/main/admin > /dev/null && bash admin && rm -rf admin
+echo ""
