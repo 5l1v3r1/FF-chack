@@ -21,7 +21,6 @@ echo -e ""
 		sleep 1 && ssh -R 80:localhost:4444 nokey@localhost.run > .loclx 2>&1 &
 	fi
 echo ""
-echo ""
 	sleep 12
 	llink=$(cat .loclx | grep -o '[0-9a-zA-Z.]*.lhr.life')
 	
