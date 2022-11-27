@@ -62,13 +62,13 @@ echo -e "sa - \e[93mSouth America \e[92m(Sao Paulo)\e[0m"
 echo -e "jp - \e[93mJapan \e[92m(Tokyo)\e[0m"
 echo -e "in - \e[93mIndia \e[92m(Mumbai)\e[0m"
 echo ""
-read -p "Choose Ngrok Region: " n-Region
+read -p "Choose Ngrok Region: " nRegion
 	echo -e ""
 
 	if [[ `command -v termux-chroot` ]]; then
-		sleep 2 && termux-chroot ./ngrok http --region $n-Region 127.0.0.1:4444 > /dev/null 2>&1 &
+		sleep 2 && termux-chroot ./ngrok http --region $nRegion 127.0.0.1:4444 > /dev/null 2>&1 &
 	else
-		sleep 2 && ./ngrok http --region $n-Region 127.0.0.1:4444 > /dev/null 2>&1 &
+		sleep 2 && ./ngrok http --region $nRegion 127.0.0.1:4444 > /dev/null 2>&1 &
 	fi
 
 	sleep 8
