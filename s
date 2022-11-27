@@ -72,7 +72,7 @@ read -p "Choose Ngrok Region: " nRegion
 	fi
 
 	sleep 8
-	nlink=$(curl -s -N http://127.0.0.1:4040/api/tunnels | grep -Eo '(https)://[^/"]+(.ngrok.io)')
+	nlink=$(curl -s -N http://127.0.0.1:4040/api/tunnels | grep -Eo '(https)://[^/"]+(*.ngrok.io)')
 
 }
 
