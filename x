@@ -55,24 +55,16 @@ echo -e ""
 	echo -e "\e[91m[\e[0m-\e[91m]\e[1;92m Launching LocalXpose...\e[0m "
 	{ sleep 1; localxpose_auth; }
 	echo -e "\n"
-	echo "==========================================================="
-echo -e "\e[96mChoose Ngrok Region (for better connection).\e[0m"
-echo "==========================================================="
-echo -e "us - \e[93mUnited States \e[92m(Ohio)\e[0m"
-echo -e "eu - \e[93mEurope \e[92m(Frankfurt)\e[0m"
-echo -e "ap - \e[93mAsia/Pacific \e[92m(Singapore)\e[0m"
-echo -e "au - \e[93mAustralia \e[92m(Sydney)\e[0m"
-echo -e "sa - \e[93mSouth America \e[92m(Sao Paulo)\e[0m"
-echo -e "jp - \e[93mJapan \e[92m(Tokyo)\e[0m"
-echo -e "in - \e[93mIndia \e[92m(Mumbai)\e[0m"
-echo ""
-read -p "Choose Ngrok Region: " loclx_region
+	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Change Loclx Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
+	[[ ${opinion,,} == "1" ]] && loclx_region="eu" || loclx_region="eu"
+	[[ ${opinion,,} == "2" ]] && loclx_region="ap" || loclx_region="ap"
+	[[ ${opinion,,} == "2" ]] && loclx_region="us" || loclx_region="us"
 	echo -e ""
 
 	if [[ `command -v termux-chroot` ]]; then
-		sleep 1 && termux-chroot ./loclx tunnel --raw-mode http --region $loclx_region --https-redirect -t 127.0.0.1:4444 > .loclx 2>&1 &
+		sleep 1 && termux-chroot ./loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t 127.0.0.1:4444 > .loclx 2>&1 &
 	else
-		sleep 1 && ./loclx tunnel --raw-mode http --region $loclx_region --https-redirect -t 127.0.0.1:4444 > .loclx 2>&1 &
+		sleep 1 && ./loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t 127.0.0.1:4444 > .loclx 2>&1 &
 	fi
 
 	sleep 12
