@@ -1,6 +1,34 @@
 #!/bin/bash
 echo ""
 
+download() {
+	url="$1"
+	output="$2"
+	file=`basename $url`
+	if [[ -e "$file" || -e "$output" ]]; then
+		rm -rf "$file" "$output"
+	fi
+	curl --silent --insecure --fail --retry-connrefused \
+		--retry 3 --retry-delay 2 --location --output "${file}" "${url}"
+
+	if [[ -e "$file" ]]; then
+		if [[ ${file#*.} == "zip" ]]; then
+			unzip -qq $file > /dev/null 2>&1
+			cp -f $output > /dev/null 2>&1
+		elif [[ ${file#*.} == "tgz" ]]; then
+			tar -zxf $file > /dev/null 2>&1
+			cp -f $output > /dev/null 2>&1
+		else
+			cp -f $file > /dev/null 2>&1
+		fi
+		chmod +x $output $file > /dev/null 2>&1
+		rm -rf file1
+	else
+		echo -e "\e[91m Error occured while downloading ${output}."
+		{ reset_color; exit 1; }
+	fi
+}
+
 install_ngrok() {
 	if [[ -e "ngrok" ]]; then
 		echo -e "\e[91m[\e[92m-\e[91m] \e[96m Ngrok already installed."
