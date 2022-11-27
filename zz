@@ -52,9 +52,9 @@ start_ngrok() {
 	echo -e $" \e[91m[\e[0m-\e[91m]\e[1;92m Launching Ngrok...\e[0m  "
 	echo -e "\n"
 	read -n1 -p $'\e[91m[\e[92m*\e[91m]\e[95m Change Loclx Server Region? \e[92m(in/eu) \e[0m ' opinion
-	[[ ${opinion,,} == "eu" ]] && loclx_region="eu" || loclx_region="us"
-  [[ ${opinion,,} == "us" ]] && loclx_region="us" || loclx_region="eu"
-  [[ ${opinion,,} == "in" ]] && loclx_region="in" || loclx_region="eu"
+	[[ ${opinion,,} == "1" ]] && loclx_region="eu" || loclx_region="us"
+  [[ ${opinion,,} == "2" ]] && loclx_region="us" || loclx_region="eu"
+  [[ ${opinion,,} == "3" ]] && loclx_region="in" || loclx_region="eu"
 	echo -e ""
 
 	if [[ `command -v termux-chroot` ]]; then
