@@ -29,23 +29,6 @@ download() {
 	fi
 }
 
-install_ngrok() {
-	if [[ -e "ngrok" ]]; then
-		echo -e "\e[91m[\e[92m-\e[91m] \e[96m Ngrok already installed."
-	else
-		echo -e "\e[91m[\e[92m*\e[91m] \e[96m Installing Ngrok..."
-		arch=`uname -m`
-		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
-			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-arm.tgz' 'ngrok'
-		elif [[ "$arch" == *'aarch64'* ]]; then
-			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-arm64.tgz' 'ngrok'
-		elif [[ "$arch" == *'x86_64'* ]]; then
-			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz' 'ngrok'
-		else
-			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-386.tgz' 'ngrok'
-		fi
-	fi
-}
 
 install_localxpose() {
 	if [[ -e "loclx" ]]; then
@@ -87,9 +70,9 @@ read -p "Choose Ngrok Region: " loclx_region
 	echo -e ""
 
 	if [[ `command -v termux-chroot` ]]; then
-		sleep 1 && termux-chroot ./loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t 127.0.0.1:4444 > .loclx 2>&1 &
+		sleep 1 && termux-chroot ./loclx tunnel --raw-mode http --region $loclx_region --https-redirect -t 127.0.0.1:4444 > .loclx 2>&1 &
 	else
-		sleep 1 && ./loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t 127.0.0.1:4444 > .loclx 2>&1 &
+		sleep 1 && ./loclx tunnel --raw-mode http --region $loclx_region --https-redirect -t 127.0.0.1:4444 > .loclx 2>&1 &
 	fi
 
 	sleep 12
